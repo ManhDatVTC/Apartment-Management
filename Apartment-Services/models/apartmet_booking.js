@@ -4,23 +4,25 @@ const { user } = require('./user');
 const { apartment } = require('./apartment');
 
 const ApartmentBooking = mongoose.model('Apartment_Booking', new mongoose.Schema({
-    Apartment: {
-        type: apartment,
+    apartment: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'apartment',
         required: true
     },
     user: {
-        type: user,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
         required: true
-    }, 
-    img_desc: String,
-    img_path: String,
+    },
+    desc: String,
 }));
 
 function validateApartmentBooking(ApartmentBooking) {
     const schema = {
-        apt_code: Joi.string().required(),
-        img_path: Joi.string().required()
+        apartment: Joi.string().required(),
+        user: Joi.string().required()
     }
+    return Joi.validate(ApartmentBooking, schema, { allowUnknown: true });
 }
 
 exports.ApartmentBooking = ApartmentBooking;
