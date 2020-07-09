@@ -1,10 +1,12 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const User_Role = mongoose.model('User_Role', new mongoose.Schema({
+const userRoleSchema = new mongoose.Schema({
     role_code: String,
     desc: String,
-}));
+});
+
+const userRole = mongoose.model('User_Role', userRoleSchema);
 
 function validateUserRole(User_Role) {
     const schema = {
@@ -14,5 +16,6 @@ function validateUserRole(User_Role) {
     return Joi.validate(User_Role, schema, { allowUnknown: true });
 }
 
-exports.User_Role = User_Role;
+exports.userRoleSchema = userRoleSchema;
+exports.userRole = userRole;
 exports.validate = validateUserRole;
