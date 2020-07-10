@@ -18,10 +18,9 @@ router.post('/', async (req, res) => {
     //Mã hoá mật khẩu với Bcrypt, kiểm tra password.
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid email or password.');
-  
+    //Đăng nhập thành công trả về token.
     const token = user.generateAuthToken();
     res.send(token);
-
 });
 
 /*

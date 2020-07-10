@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema({
     phone_number: String,
     role_type: String
 });
-
+/*
+    Logic đóng gói trong các mô hình Mongoose
+*/
 userSchema.methods.generateAuthToken = function () {
     //Storing Secrets in Environment Variables
     const token = jwt.sign({ _id: this._id }, config.jwtPrivateKey);
