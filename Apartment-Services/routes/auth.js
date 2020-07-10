@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 });
 
 /*
-  Kiểm tra thông tin đăng nhập.
+  Kiểm tra thông tin đăng nhập có đúng định dạng hay không.
 */
 function validate(req) {
     const schema = {

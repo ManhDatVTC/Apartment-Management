@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+/*
+    Lấy ra toàn bộ apartment building.
+*/
 router.get('/', async (req, res) => {
     const apt_building = await Apartment_Building.find().sort('name');
     res.send(apt_building);
 });
 
+/*
+    Lấy ra apartment building theo id.
+*/
 router.get('/:id', async (req, res) => {
     const apt_building = await Apartment_Building.findById(req.params.id);
 
@@ -15,6 +21,9 @@ router.get('/:id', async (req, res) => {
     res.send(apt_building);
 });
 
+/*
+    Thêm mới apartment building.
+*/
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -34,6 +43,9 @@ router.post('/', async (req, res) => {
     res.send(apartment_building);
 });
 
+/*
+    Chỉnh sửa apartment building.
+*/
 router.put('/:id', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -53,6 +65,9 @@ router.put('/:id', async (req, res) => {
     res.send(apartment_building);
 });
 
+/*
+    Xóa apartment building theo id.
+*/
 router.delete('/:id', async (req, res) => {
     const apartment_building = await Apartment_Building.findByIdAndRemove(req.params.id);
 

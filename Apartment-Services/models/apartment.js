@@ -1,8 +1,9 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
-const { Apartment_Building } = require('./apartmet_building');
+const { ApartmentBuildingSchema } = require('./apartmet_building');
 
-const Apartment = mongoose.model('Apartments', new mongoose.Schema({
+
+const apartmentSchema = new mongoose.Schema({
     apt_name: String,
     address: String,
     rooms_count: Number,
@@ -18,12 +19,13 @@ const Apartment = mongoose.model('Apartments', new mongoose.Schema({
     apt_status: Number,
     stype_code: Number,
     apartment_building: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Apartment_Building',
+        type: ApartmentBuildingSchema,
         required: true
     },
     apartment_img: Array
-}));
+});
+
+const apartment = mongoose.model('Apartments', apartmentSchema);
 
 function validateApartment(apartment) {
     const schema = Joi.object({
@@ -32,7 +34,7 @@ function validateApartment(apartment) {
     });
     return Joi.validate(apartment, schema, {allowUnknown:true});
 }
-
-exports.Apartment = Apartment;
+exports.ApartmentSchema = apartmentSchema;
+exports.Apartment = apartment;
 exports.validate = validateApartment;
 

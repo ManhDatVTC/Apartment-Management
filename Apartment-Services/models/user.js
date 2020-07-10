@@ -1,10 +1,12 @@
-const config = require('config');
+const config = require('../config/default.json');
 const jwt = require('jsonwebtoken');
 
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-
+/*
+    Tạo đối tượng USER
+*/
 const userSchema = new mongoose.Schema({
     user_name: String,
     email: String,
@@ -15,8 +17,9 @@ const userSchema = new mongoose.Schema({
     phone_number: String,
     role_type: String
 });
+
 /*
-    Logic đóng gói trong các mô hình Mongoose
+    Logic đóng gói auth token
 */
 userSchema.methods.generateAuthToken = function () {
     //Storing Secrets in Environment Variables
@@ -37,5 +40,6 @@ function validateUser(User) {
     return Joi.validate(User, schema, { allowUnknown: true });
 }
 
+exports.UserSchema = userSchema;
 exports.User = User;
 exports.validate = validateUser;

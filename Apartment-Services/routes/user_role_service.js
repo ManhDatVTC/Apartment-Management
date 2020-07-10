@@ -3,11 +3,17 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+/*
+   Lấy ra toàn bộ quyền đang hiện có.
+*/
 router.get('/', async (req, res) => {
     const user_role = await User_Role.find().sort('name');
     res.send(user_role);
 });
 
+/*
+   Thêm mới 1 quyền.
+*/
 router.post('/', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -20,6 +26,9 @@ router.post('/', async (req, res) => {
     res.send(user_role);
 });
 
+/*
+   Chỉnh sửa thông tin quyền.
+*/
 router.put('/:id', async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -33,6 +42,9 @@ router.put('/:id', async (req, res) => {
     res.send(user_role);
 });
 
+/*
+   Xóa đi thông tin quyền.
+*/
 router.delete('/:id', async (req, res) => {
     const user_role = await User_Role.findByIdAndRemove(req.params.id);
 

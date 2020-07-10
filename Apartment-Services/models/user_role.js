@@ -1,6 +1,10 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
+/*
+    Quyền của từng đối  User.
+*/
+
 const userRoleSchema = new mongoose.Schema({
     role_code: String,
     desc: String,

@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
-const Apartment_Building = mongoose.model('Apartment_Building', new mongoose.Schema({
+const apartmentBuildingSchema = new mongoose.Schema({
     short_name: String,
     full_name: String,
     desc: String,
@@ -10,7 +10,9 @@ const Apartment_Building = mongoose.model('Apartment_Building', new mongoose.Sch
     email: String,
     ceo_building: String,
     logo_img: String
-}));
+});
+
+const Apartment_Building = mongoose.model('Apartment_Building', apartmentBuildingSchema);
 
 function validateApartmentBuilding(ApartmentBuilding) {
     const schema = {
@@ -25,5 +27,6 @@ function validateApartmentBuilding(ApartmentBuilding) {
     return Joi.validate(ApartmentBuilding, schema, {allowUnknown:true});
 }
 
+exports.ApartmentBuildingSchema = apartmentBuildingSchema;
 exports.Apartment_Building = Apartment_Building;
 exports.validate = validateApartmentBuilding;
