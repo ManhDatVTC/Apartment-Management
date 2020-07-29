@@ -1,5 +1,6 @@
 const config = require('../config/default.json');
 const jwt = require('jsonwebtoken');
+const { userRoleSchema } = require('./user_role');
 
 const Joi = require('joi');
 const mongoose = require('mongoose');
@@ -15,7 +16,10 @@ const userSchema = new mongoose.Schema({
     date_of_birth: Date,
     gender: String,
     phone_number: String,
-    role_type: String
+    user_role: {
+        type: userRoleSchema,
+        required: true
+    }
 });
 
 /*
