@@ -17,12 +17,17 @@ const apartmentSchema = new mongoose.Schema({
     price_rent: Number,
     apt_desc: String,
     apt_status: Number,
-    stype_code: Number,
+    stype_code: String,
     apartment_building: {
         type: ApartmentBuildingSchema,
         required: true
     },
-    apartment_img: Array
+    apartment_img: String,
+    create_at: {
+        type: Date,
+        default: Date.now
+    },
+    update_at: Date
 });
 
 const apartment = mongoose.model('Apartments', apartmentSchema);

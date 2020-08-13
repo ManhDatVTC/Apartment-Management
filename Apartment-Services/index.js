@@ -15,6 +15,8 @@ const User = require('./routes/user_service');
 const Apartment = require('./routes/apartment_service');
 const Apartment_Building = require('./routes/apartmet_building_service');
 const Apartment_Booking = require('./routes/apartmet_booking_service');
+const Search = require('./routes/search_service');
+
 const Auth = require('./routes/auth');
 
 //Kiểm tra lưu chữ bí mật trong biến môi trường jwtPrivateKey.
@@ -25,9 +27,8 @@ if (!config.jwtPrivateKey) {
 
 //Kết nối database MongoDB.
 mongoose.connect('mongodb://localhost/Apartment-Management', { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('Connected to MongoDB...'))
+    .then(() => console.log('Connected'))
     .catch(err => console.log('Could not connect to MongoDB...', err));
-
 
 //Sử dụng API
 app.use(express.json());
@@ -37,6 +38,9 @@ app.use('/api/auth', Auth);
 app.use('/api/apartment', Apartment);
 app.use('/api/apartment_building', Apartment_Building);
 app.use('/api/apartment_booking', Apartment_Booking);
+app.use('/api/search', Search);
+
+app.use('/api/uploads',express.static('uploads'))
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

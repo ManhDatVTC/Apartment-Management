@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
 */
 userSchema.methods.generateAuthToken = function () {
     //Storing Secrets in Environment Variables
-    const token = jwt.sign({ _id: this._id }, config.jwtPrivateKey);
+    const token = jwt.sign({ _id: this._id, auth_admin: this.user_role.role_code}, config.jwtPrivateKey);
     return token;
 }
 

@@ -1,13 +1,12 @@
-const auth = require('../middleware/auth');
-const jwt = require('jsonwebtoken');
-const config = require('config');
+
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const { User, validate } = require('../models/user');
-const { UserRole } = require('../models/user_role');
-
+const { User_Role } = require('../models/user_role');
 const mongoose = require('mongoose');
 const express = require('express');
+const auth = require('../middleware/auth');
+const admin_auth = require('../middleware/admin');
 const router = express.Router();
 
 /*
@@ -17,6 +16,14 @@ router.get('/me', auth, async (req, res) => {
     //Trả lại thông tin người dùng và exclude password.
     const user = await User.findById(req.user._id).select('-password');
     res.send(user);
+});
+
+/*
+    Lấy ra toàn bộ User.
+*/
+router.get('/', [auth, admin_auth], async (req, res) => {
+    const use = await User.find().sort('name');
+    res.send(use);
 });
 
 /*
@@ -32,7 +39,7 @@ router.post('/', async (req, res) => {
     if (user) return res.status(400).send('User already registered.');
 
     // User role
-    const user_role = await UserRole.findById(req.body.user_role_id);
+    const user_role = await User_Role.findById(req.body.user_role_id);
     if (!user_role) return res.status(400).send('Invalid user role!');
 
     //Hash password.
@@ -70,7 +77,7 @@ router.put('/:id', auth, async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     // User role
-    const user_role = await UserRole.findById(req.body.user_role_id);
+    const user_role = await User_Role.findById(req.body.user_role_id);
     if (!user_role) return res.status(400).send('Invalid user role!');
 
     //Hash password.

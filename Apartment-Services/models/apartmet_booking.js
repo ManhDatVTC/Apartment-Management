@@ -15,4 +15,4 @@ const ApartmentBooking = mongoose.model('Apartment_Booking', new mongoose.Schema
     desc: String,
 }));
 
-exports.ApartmentBooking = ApartmentBooking;
+exports.Apartmet_Booking = ApartmentBooking;

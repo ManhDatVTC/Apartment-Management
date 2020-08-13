@@ -9,7 +9,12 @@ const apartmentBuildingSchema = new mongoose.Schema({
     phone_number: String,
     email: String,
     ceo_building: String,
-    logo_img: String
+    logo_img: String,
+    create_at: {
+        type: Date,
+        default: Date.now
+    },
+    update_at: Date
 });
 
 const Apartment_Building = mongoose.model('Apartment_Building', apartmentBuildingSchema);
@@ -21,10 +26,9 @@ function validateApartmentBuilding(ApartmentBuilding) {
         address: Joi.string().min(3).max(100).required(),
         phone_number: Joi.string().min(3).max(100).required(),
         email: Joi.string().min(3).max(100).required(),
-        ceo_building: Joi.string().min(3).max(100).required(),
-        logo_img: Joi.string().required(),
+        ceo_building: Joi.string().min(3).max(100).required()
     }
-    return Joi.validate(ApartmentBuilding, schema, {allowUnknown:true});
+    return Joi.validate(ApartmentBuilding, schema, { allowUnknown: true });
 }
 
 exports.ApartmentBuildingSchema = apartmentBuildingSchema;

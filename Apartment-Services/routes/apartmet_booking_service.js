@@ -1,6 +1,8 @@
 const { Apartmet_Booking } = require('../models/apartmet_booking');
 const { Apartment } = require('../models/apartment');
 const { User } = require('../models/user');
+const { Apartment_Building } = require('../models/apartmet_building');
+const { User_Role } = require('../models/user_role');
 const auth = require('../middleware/auth');
 
 const mongoose = require('mongoose');
@@ -43,8 +45,12 @@ router.post('/', auth, async (req, res) => {
     const user = await User.findById(req.body.user_id).select('-password');
     if (!user) return res.status(400).send('Invalid user!');
 
+    // User role
+    const user_role = await User_Role.findById(user.user_role._id);
+    if (!user_role) return res.status(400).send('Invalid user role!');
+
     // Apartmet
-    let apartmetBooking = new Apartmet_Booking({
+    let apartmet_booking = new Apartmet_Booking({
         apartment: {
             apt_name: apartment.apt_name,
             address: apartment.address,
@@ -81,12 +87,18 @@ router.post('/', auth, async (req, res) => {
             date_of_birth: user.date_of_birth,
             gender: user.gender,
             phone_number: user.phone_number,
+            user_role: {
+                _id: user_role._id,
+                role_code: user_role.role_code,
+                desc: user_role.desc
+            }
         },
         desc: req.body.desc
     });
+    console.log(apartmet_booking);
 
-    apartmetBooking = await Apartmet_Booking.save();
-    res.send(apartmetBooking);
+    apartmet_booking = await apartmet_booking.save();
+    res.send(apartmet_booking);
 });
 
 /*

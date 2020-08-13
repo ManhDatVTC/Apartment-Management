@@ -21,5 +21,5 @@ function validateUserRole(User_Role) {
 }
 
 exports.userRoleSchema = userRoleSchema;
-exports.UserRole = userRole;
+exports.User_Role = userRole;
 exports.validate = validateUserRole;
