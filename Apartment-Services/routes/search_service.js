@@ -30,10 +30,10 @@ router.get('/', async (req, res) => {
     }
     //Price apartment BETWEEN minimum_price and maximum_prices
     if (req.body.price_condition != 'undefined' && req.body.price_condition != null) {
-        if (req.body.price_condition.minimum_price != 'undefined' && req.body.price_condition.minimum_price != null &&
+        if (req.body.price_condition.minimum_prices != 'undefined' && req.body.price_condition.minimum_prices != null &&
             req.body.price_condition.maximum_prices != 'undefined' && req.body.price_condition.maximum_prices != null) {
             Object.assign(findValue, { price: {
-                 $gte: req.body.price_condition.minimum_price,
+                 $gte: req.body.price_condition.minimum_prices,
                  $lte: req.body.price_condition.maximum_prices } });
         }
     }

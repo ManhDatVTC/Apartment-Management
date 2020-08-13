@@ -38,8 +38,11 @@ router.get('/:id', async (req, res) => {
     Thêm mới apartment.
 */
 router.post('/', [auth, admin_auth], upload.array('apartment_images', 20), async (req, res) => {
-    console.log(JSON.stringify(req.files));
     if (!req.files) return res.status(404).send('Please upload a file.');
+    var arrayFile = [];
+    req.files.forEach((item, index) => {
+        arrayFile.push(item.path)
+    });
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     // Apartmet Building
@@ -73,7 +76,8 @@ router.post('/', [auth, admin_auth], upload.array('apartment_images', 20), async
             ceo_building: apartmetBuilding.ceo_building,
             logo_img: apartmetBuilding.logo_img
         },
-        apartment_img: JSON.stringify(req.files)
+        apartment_img: arrayFile
+
     });
     apartment = await apartment.save();
     res.send(apartment);
@@ -83,12 +87,14 @@ router.post('/', [auth, admin_auth], upload.array('apartment_images', 20), async
     Sửa đổi thông tin Apartmet
 */
 router.put('/:id', [auth, admin_auth], upload.array('apartment_images', 20), async (req, res) => {
-    console.log(JSON.stringify(req.files));
     if (!req.files) return res.status(404).send('Please upload a file.');
+    var arrayFile = [];
+    req.files.forEach((item, index) => {
+        arrayFile.push(item.path)
+    });
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     // Apartmet Building
-    console.log(JSON.stringify("req.body.apartmetBuildingId" + req.body.apartmet_building_id));
     const apartmetBuilding = await Apartment_Building.findById(req.body.apartmet_building_id);
     if (!apartmetBuilding) return res.status(400).send('Invalid apartmet building.');
 
@@ -119,9 +125,9 @@ router.put('/:id', [auth, admin_auth], upload.array('apartment_images', 20), asy
             ceo_building: apartmetBuilding.ceo_building,
             logo_img: apartmetBuilding.logo_img
         },
-        apartment_img: JSON.stringify(req.files),
+        apartment_img: arrayFile,
         update_at: Date.now()
-    }, { new: true });
+    }, { new: true, useFindAndModify: false });
 
     if (!apartment) return res.status(404).send('The apartment with the given ' + req.body.apt_name + ' was not found.');
     res.send(apartment);

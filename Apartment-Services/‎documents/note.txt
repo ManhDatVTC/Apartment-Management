@@ -1,0 +1,29 @@
+Filter dữ liệu drop down trên menu lấy tại
+- https://thongtindoanhnghiep.co/rest-api : Dữ liệu địa chỉ các tỉnh thành tại việt nam. 
+- http://localhost:3000/api/searcch/filter: Dữ liệu kiểu apartment, price, sorting
+
+Hướng dẫn API search.
+http://localhost:3000/api/search?pageNumber=1&pageSize=10
+- Truyền param pageNumber, pageSize để trả đúng và đủ dữ liệu để phân trang.
+- Các properties trong file Json có thể có hoặc không đều được.
+{
+    "search_all_value": "...." 
+    "stype_code": "..." 
+    "price_condition": {
+        "minimum_prices":  "..." 
+        "maximum_prices":  "..." 
+    },
+    bedrooms_count: bedrooms_count,
+    sort_apt_name: "..." 
+    sort_price: "..." 
+    sort_date: "..." 
+}
+
+search_all_value : điều kiện mà người dùng nhập vào thanh search.
+stype_code : giá trị được truyền vào sẽ là  01, 02. Dữ liệu được lấy từ Api Filter trường apartment_stype.stype_code.
+price_condition.minimum_prices dữ liệu được lấy từ Api Filter trường price_stype.minimum_prices.
+price_condition.maximum_prices dữ liệu được lấy từ Api Filter trường price_stype.maximum_prices
+bedrooms_count số lượng phòng ngủ
+sort_apt_name : sorting A - Z || Z - A. Dữ liệu được lấy từ Api Filter trường sorting_stype.sort_value giá trị gồm (ASC, DESC)
+sort_price : Dữ liệu được lấy từ Api Filter trường sorting_stype.sort_value giá trị gồm (ASC, DESC)
+sort_date: Dữ liệu được lấy từ Api Filter trường sorting_stype.sort_value giá trị gồm (ASC, DESC)

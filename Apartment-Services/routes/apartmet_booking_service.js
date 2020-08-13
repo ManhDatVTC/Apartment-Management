@@ -4,6 +4,7 @@ const { User } = require('../models/user');
 const { Apartment_Building } = require('../models/apartmet_building');
 const { User_Role } = require('../models/user_role');
 const auth = require('../middleware/auth');
+const admin_auth = require('../middleware/admin');
 
 const express = require('express');
 const router = express.Router();
@@ -12,7 +13,7 @@ const router = express.Router();
 /*
     Lấy ra toàn bộ thông tin apartmet booking.
 */
-router.get('/', async (req, res) => {
+router.get('/',[auth, admin_auth], async (req, res) => {
     const apt_booking = await Apartmet_Booking.find().sort('name');
     res.send(apt_booking);
 });
@@ -20,7 +21,7 @@ router.get('/', async (req, res) => {
 /*
     Lấy ra apartmet booking theo id.
 */
-router.get('/:id', async (req, res) => {
+router.get('/:id',auth, async (req, res) => {
     const apt_booking = await Apartmet_Booking.findById(req.params.id);
 
     if (!apt_booking) return res.status(404).send('The apartmet booking with the given ID was not found.');
@@ -103,7 +104,7 @@ router.post('/', auth, async (req, res) => {
 /*
     Xóa apartment booking theo id.
 */
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', auth, async (req, res) => {
     const apartmetBooking = await Apartment_Building.findByIdAndRemove(req.params.id);
 
     if (!apartmetBooking) return res.status(404).send('The Apartment Building with the given ' + req.body.apt_name + 'was not found.');

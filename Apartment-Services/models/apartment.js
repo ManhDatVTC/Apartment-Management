@@ -22,7 +22,7 @@ const apartmentSchema = new mongoose.Schema({
         type: ApartmentBuildingSchema,
         required: true
     },
-    apartment_img: String,
+    apartment_img: Array,
     create_at: {
         type: Date,
         default: Date.now
