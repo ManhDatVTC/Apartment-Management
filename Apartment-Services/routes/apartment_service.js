@@ -1,6 +1,5 @@
 const { Apartment, validate } = require('../models/apartment');
 const { Apartment_Building } = require('../models/apartmet_building');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');

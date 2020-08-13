@@ -5,7 +5,6 @@ const { Apartment_Building } = require('../models/apartmet_building');
 const { User_Role } = require('../models/user_role');
 const auth = require('../middleware/auth');
 
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 

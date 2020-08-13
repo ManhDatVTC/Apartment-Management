@@ -1,5 +1,4 @@
 const { User_Role, validate } = require('../models/user_role');
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');

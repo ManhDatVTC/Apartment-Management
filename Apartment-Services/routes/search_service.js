@@ -23,14 +23,18 @@ router.get('/', async (req, res) => {
         orFindValue.push({ "apartment_building.short_name": new RegExp(req.body.search_all_value, 'i') });
     }
     //Apartment type: APARTMENT: '01', VILLA: '02'
-    if (req.body.stype_code != 'undefined' && req.body.stype_code != null && (req.body.stype_code == Common_List.StypeCodeDefault.APARTMENT || req.body.stype_code == Common_List.StypeCodeDefault.VILLA)) {
+    if (req.body.stype_code != 'undefined' && req.body.stype_code != null &&
+         (req.body.stype_code == Common_List.StypeCodeDefault.APARTMENT ||
+          req.body.stype_code == Common_List.StypeCodeDefault.VILLA)) {
         Object.assign(findValue, { stype_code: { $eq: req.body.stype_code } });
     }
     //Price apartment BETWEEN minimum_price and maximum_prices
     if (req.body.price_condition != 'undefined' && req.body.price_condition != null) {
         if (req.body.price_condition.minimum_price != 'undefined' && req.body.price_condition.minimum_price != null &&
             req.body.price_condition.maximum_prices != 'undefined' && req.body.price_condition.maximum_prices != null) {
-            Object.assign(findValue, { price: { $gte: req.body.price_condition.minimum_price, $lte: req.body.price_condition.maximum_prices } });
+            Object.assign(findValue, { price: {
+                 $gte: req.body.price_condition.minimum_price,
+                 $lte: req.body.price_condition.maximum_prices } });
         }
     }
     //Count the Bedrooms
